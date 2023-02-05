@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translation Web App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .container {
+            width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+        button {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Translation Web App</h1>
+        <form>
+            <textarea id="text-to-translate"></textarea>
+            <br><br>
+            <select id="target-language">
+                <option value="en">English</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+                <option value="it">Italian</option>
+            </select>
+            <br><br>
+            <button id="translate-button">Translate</button>
+        </form>
+        <br><br>
+        <h2>Translated Text:</h2>
+        <div id="translated-text"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#translate-button").click(function(e) {
+                e.preventDefault();
+
+                var textToTranslate = $("#text-to-translate").val();
+                var targetLanguage = $("#target-language").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/translate",
+                    data: {
+                        "text-to-translate": textToTranslate,
+                        "target-language": targetLanguage
+                    },
+                    success: function(data) {
+                        $("#translated-text").text(data);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
 
